@@ -11,10 +11,19 @@ services:
       - "5432"
     networks:
       - backend
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   web:
     build: .
-#    command to web wait for db
-    command: ["./wait-for-it.sh", "db:5432", "--", "python", "manage.py", "runserver", "0.0.0.0:8000"]
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+    depends_on:
+      db:
+        condition: service_healthy
 
     #command: python manage.py runserver 0.0.0.0:8000
 #    mapping local files to Docker files (automatically)
