@@ -16,6 +16,11 @@ def api_root(request, format=None):
         {
             "cars": reverse("cars:cars-list", request=request, format=format),
             "users": reverse("cars:users-list", request=request, format=format),
+            "auth": {
+                "obtain-jwt-token": reverse("cars:obtain-jwt-token", request=request, format=format),
+                "refresh-token": reverse("cars:refresh-token", request=request, format=format),
+                "verify-token": reverse("cars:verify-token", request=request, format=format),
+            },
         }
     )
 
