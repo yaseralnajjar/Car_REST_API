@@ -1,0 +1,38 @@
+[
+  {
+    "model": "cars.car",
+    "pk": 1,
+    "fields": {
+      "user": 2,
+      "added": "2022-05-15T19:17:10.693Z",
+      "model": "Accent Blue",
+      "brand": "Hyundai",
+      "color": "Red",
+      "horsepower": 300
+    }
+  },
+  {
+    "model": "cars.car",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "added": "2022-05-15T19:17:29.732Z",
+      "model": "Accord",
+      "brand": "Honda",
+      "color": "White",
+      "horsepower": 400
+    }
+  },
+  {
+    "model": "cars.car",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "added": "2022-05-15T19:17:52.434Z",
+      "model": "Benz",
+      "brand": "Mercides",
+      "color": "Black",
+      "horsepower": 500
+    }
+  }
+]
