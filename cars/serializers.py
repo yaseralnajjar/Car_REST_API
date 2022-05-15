@@ -3,7 +3,7 @@ from cars.models import Car
 from django.contrib.auth.models import User
 
 
-class UserFullSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = [
@@ -11,24 +11,27 @@ class UserFullSerializer(serializers.ModelSerializer):
             "username",
             "first_name",
             "last_name",
-            "email",
+            "password",
             "date_joined",
             "is_superuser",
         ]
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
         read_only_fields = ["id", "date_joined", "is_superuser"]
 
-
-class UserSerializer(serializers.Serializer):
-    email = serializers.EmailField(allow_blank=True)
-    username = serializers.CharField(max_length=100)
+    def create(self, validated_data):
+        username = validated_data.get("username")
+        validated_data["email"] = f"{username}@email.com"
+        password = validated_data.pop("password")
+        user = User.objects.create(**validated_data)
+        user.set_password(password)
+        user.save()
+        return user
 
 
 class CarSerializer(serializers.ModelSerializer):
-    # dodac w fields url
     url = serializers.SerializerMethodField(read_only=True)
-
-    # dodatkowy serializer do podania info o userze
-    # user = UserSerializer(required=False)
 
     class Meta:
         model = Car

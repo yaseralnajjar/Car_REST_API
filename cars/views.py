@@ -1,8 +1,9 @@
 from rest_framework import generics
+from rest_framework import permissions
 from cars.models import Car
 from django.contrib.auth.models import User
-from cars.serializers import CarSerializer, UserFullSerializer
-from cars.permissions import IsOwnerOrReadOnly
+from cars.serializers import CarSerializer, UserSerializer
+from cars.permissions import IsOwnerOrReadOnly, IsHisAccount
 from django.db.models import Q
 
 from rest_framework.decorators import api_view
@@ -52,10 +53,11 @@ class CarDetail(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsOwnerOrReadOnly]
 
 
-class UsersList(generics.ListAPIView):
+class UsersList(generics.ListCreateAPIView):
 
     queryset = User.objects.all()
-    serializer_class = UserFullSerializer
+    serializer_class = UserSerializer
+    permission_classes = [permissions.AllowAny]
 
     # http://127.0.0.1:8000/users/?q=adam
     def get_queryset(self):
@@ -68,7 +70,8 @@ class UsersList(generics.ListAPIView):
         return queryset
 
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+class UserDetail(generics.RetrieveUpdateAPIView):
 
     queryset = User.objects.all()
-    serializer_class = UserFullSerializer
+    serializer_class = UserSerializer
+    permission_classes = [IsHisAccount]
