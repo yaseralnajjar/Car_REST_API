@@ -43,6 +43,13 @@ To create superuser:
 docker-compose run web python manage.py createsuperuser
 ```
 
+To load already-prepared data:
+
+```
+docker-compose run web python manage.py loaddata users.json
+docker-compose run web python manage.py loaddata cars.json
+```
+
 ## Commands
 
 To run containers:
@@ -100,6 +107,23 @@ To run tests:
 ```
 docker-compose run web python manage.py test
 ```
+
+## Create Fixture Data
+
+After adding data using django admin panel, to enter the docker container in bash:
+
+```
+docker-compose run web bash
+```
+
+Then to create the fixtures:
+
+```
+python manage.py dumpdata --exclude auth.permission --exclude sessions --exclude contenttypes --exclude admin.logentry --exclude cars.car > users.json
+python manage.py dumpdata --exclude auth.permission --exclude sessions --exclude contenttypes --exclude admin.logentry --exclude auth.user > cars.json
+```
+
+A good reference can be found here: [Django dumpdata and loaddata](https://coderwall.com/p/mvsoyg/django-dumpdata-and-loaddata)
 
 ## Contact
 
