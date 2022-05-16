@@ -50,6 +50,13 @@ docker-compose run web python manage.py loaddata users.json
 docker-compose run web python manage.py loaddata cars.json
 ```
 
+User data:
+
+| username | password |
+| -------- | -------- |
+| mike     | 123456   |
+| adam     | 123456   |
+
 ## Commands
 
 To run containers:
